@@ -16,6 +16,13 @@ df_list = [pd.read_excel(file) for file in files]
 data = pd.concat(df_list, ignore_index=True)
 st.write(data.columns)
 
+# Clean column names
+data.columns = data.columns.str.strip()
+
+# Convert engine & max_power to numeric
+data["engine"] = data["engine"].astype(str).str.extract('(\d+)').astype(float)
+data["max_power"] = data["max_power"].astype(str).str.extract('(\d+)').astype(float)
+
 # Select columns
 data = data[["year", "km_driven", "engine", "max_power", "selling_price"]].dropna()
 
