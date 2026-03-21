@@ -23,11 +23,24 @@ data.columns = data.columns.str.strip()
 data["engine"] = data["engine"].astype(str).str.extract('(\d+)').astype(float)
 data["max_power"] = data["max_power"].astype(str).str.extract('(\d+)').astype(float)
 
-# Select columns
-data = data[["year", "km_driven", "engine", "max_power", "selling_price"]].dropna()
+# Clean column names
+data.columns = data.columns.str.strip().str.lower()
+
+# Rename columns if needed
+data = data.rename(columns={
+    "selling_price": "price",
+    "model_year": "year"
+})
+
+# Convert engine & power to numeric
+data["engine"] = data["engine"].astype(str).str.extract('(\d+)').astype(float)
+data["max_power"] = data["max_power"].astype(str).str.extract('(\d+)').astype(float)
+
+# Select columns safely
+data = data[["year", "km_driven", "engine", "max_power", "price"]].dropna()
 
 X = data[["year", "km_driven", "engine", "max_power"]]
-y = data["selling_price"]
+y = data["price"]
 
 # Train model
 model = RandomForestRegressor(n_estimators=100, random_state=42)
