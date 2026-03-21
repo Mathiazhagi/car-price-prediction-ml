@@ -14,6 +14,7 @@ files = [
 
 df_list = [pd.read_excel(file) for file in files]
 data = pd.concat(df_list, ignore_index=True)
+st.write(data.columns)
 
 # Select columns
 data = data[["year", "km_driven", "engine", "max_power", "selling_price"]].dropna()
