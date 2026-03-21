@@ -16,10 +16,10 @@ df_list = [pd.read_excel(file) for file in files]
 data = pd.concat(df_list, ignore_index=True)
 
 # Select columns
-data = data[["model_year", "km_driven", "engine", "max_power", "price"]].dropna()
+data = data[["year", "km_driven", "engine", "max_power", "selling_price"]].dropna()
 
-X = data[["model_year", "km_driven", "engine", "max_power"]]
-y = data["price"]
+X = data[["year", "km_driven", "engine", "max_power"]]
+y = data["selling_price"]
 
 # Train model
 model = RandomForestRegressor(n_estimators=100, random_state=42)
